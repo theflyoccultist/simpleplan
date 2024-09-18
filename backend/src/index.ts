@@ -1,7 +1,10 @@
 import express, { Express, Request, Response } from "express";
 import { sequelize } from "./config/database";
 import dotenv from "dotenv"
+
 import authRouter from './routes/auth';
+import ticketRouter from './routes/tickets';
+import eventRouter from './routes/events';
 import cors from "cors";
 
 dotenv.config();
@@ -30,6 +33,10 @@ sequelize.authenticate()
     })
 
 app.use('/auth', authRouter);
+
+app.use('/tickets', ticketRouter);
+
+app.use('/events', eventRouter);
 
 app.get('/', (req: Request, res: Response) => {
     res.send('API Running');
