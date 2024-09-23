@@ -6,6 +6,7 @@ import './index.css'
 import Dashboard from './components/Dashboard.tsx'
 import Login from './components/Login.tsx'
 import Register from './components/Register.tsx';
+import EventsList from './components/Events.tsx';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/events' element={<EventsList />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,
