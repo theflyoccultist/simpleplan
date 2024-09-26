@@ -1,17 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import EventCreateForm from './EventCreateForm';
+import EventEdit from './EventEdit';
+import { Button } from 'react-bootstrap';
 
 interface Event {
-    id: number;
-    name: string;
-    eventDate: string;
-    eventTime: string;
-    location: string;
-    description: string;
-}
-
-interface EventEdit {
     id: number;
     name: string;
     eventDate: string;
@@ -25,6 +18,8 @@ const EventsList: React.FC = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [sortField, setSortField] = useState<'name' | 'eventDate'>('name');
     const [sortOrder, setSortOrder] = useState('asc');
+    const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+    const [showEditModal, setShowEditModal] = useState(false);
 
 
     useEffect(() => {
@@ -43,23 +38,6 @@ const EventsList: React.FC = () => {
         };
         fetchEvents();
     }, []);
-
-
-
-    const editEvent = async (eventId: number, updatedEvent: Omit<EventEdit, 'eventId'>) => {
-        try {
-            const response = await axios.put(`http://localhost:3000/events/${eventId}`, updatedEvent, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                }
-            });
-            setEvents(prevEvents => prevEvents.map(event => 
-                event.id === eventId ? response.data : event
-            ));
-        } catch (error) {
-            console.error('Error updating event', error);
-        }
-    }
 
     const deleteEvent = async (eventId: number) => {
         try {
@@ -101,6 +79,11 @@ const EventsList: React.FC = () => {
         }
     });
 
+    const handleEditClick = (event: Event) => {
+        setSelectedEvent(event);
+        setShowEditModal(true);
+    }
+
     return (
         <div>
             <EventCreateForm />
@@ -129,10 +112,23 @@ const EventsList: React.FC = () => {
                     <li key={event.id}>
                         <h3>{event.name}</h3>
                         <p>Date: {event.eventDate}</p>
+                        <p>Time: {event.eventTime}</p>
                         <p>Location: {event.location}</p>
+                        <p>Description: {event.description}</p>
+                        <Button onClick={() => handleEditClick(event)}>Edit Event</Button>
+                        <Button variant='danger' onClick={() => deleteEvent(event.id)}>Delete Event</Button>
                     </li>
                 ))}
             </ul>
+
+            {selectedEvent && (
+                <EventEdit 
+                    show={showEditModal}
+                    handleClose={() => setShowEditModal(false)}
+                    event={selectedEvent}
+                    setEvents={setEvents}
+                />
+            )}
         </div>
     );
 };
