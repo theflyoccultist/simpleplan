@@ -39,18 +39,18 @@ const EventsList: React.FC = () => {
         fetchEvents();
     }, []);
 
-    const deleteEvent = async (eventId: number) => {
-        try {
-            await axios.delete(`http://localhost:3000/events/${eventId}`, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                }
-            });
-            setEvents(prevEvents => prevEvents.filter(event => event.id !== eventId));
-        } catch (error) {
-            console.error('Error deleting event', error);
-        }
-    };
+        const deleteEvent = async (eventId: number) => {
+            try {
+                await axios.delete(`http://localhost:3000/events/${eventId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    }
+                });
+                setEvents(prevEvents => prevEvents.filter(event => event.id !== eventId));
+            } catch (error) {
+                console.error('Error deleting event', error);
+            }
+        };
 
     // Filter events based on search query
     const filteredEvents = events.filter(event =>
@@ -116,7 +116,14 @@ const EventsList: React.FC = () => {
                         <p>Location: {event.location}</p>
                         <p>Description: {event.description}</p>
                         <Button onClick={() => handleEditClick(event)}>Edit Event</Button>
-                        <Button variant='danger' onClick={() => deleteEvent(event.id)}>Delete Event</Button>
+                        <Button 
+                            variant='danger' 
+                            onClick={() => {
+                                if (window.confirm(`Are you sure you want to delete the event: "${event.name}"?`)) {
+                                    deleteEvent(event.id)
+                                }
+                            }}> Delete Event
+                        </Button>
                     </li>
                 ))}
             </ul>

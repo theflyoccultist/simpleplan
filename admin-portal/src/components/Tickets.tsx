@@ -26,11 +26,23 @@ const TicketList: React.FC = () => {
                 console.error('Error fetching tickets', error)   
             }
         };
-        fetchTickets();
+        fetchTickets(1);
     }, []);
 
-
-
+return (
+    <div>
+        <h2>Tickets</h2>
+        <ul>
+            <li>
+                <p>Event Id:</p>
+                <p>Name:</p>
+                <p>Price:</p>
+                <p>Category:</p>
+                <p>Availability:</p>
+            </li>
+        </ul>
+    </div>
+)
 };
 
 export default TicketList;
