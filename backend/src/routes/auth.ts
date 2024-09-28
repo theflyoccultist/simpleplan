@@ -46,7 +46,7 @@ router.post('/register',
                 });
             
                 const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET as string, {
-                    expiresIn: '1h',                
+                    expiresIn: '1d',                
             });
 
             return res.status(201).json({ token });
@@ -83,7 +83,7 @@ router.post('/login',
             }
 
             const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET as string, {
-                expiresIn: '1h',                
+                expiresIn: '1d',                
             });
 
             res.json({ token });

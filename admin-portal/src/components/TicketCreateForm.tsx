@@ -11,15 +11,23 @@ const TicketCreateForm: React.FC<TicketCreate> = ({ eventId }) => {
     const [price, setPrice] = useState('');
     const [category, setCategory] = useState('');
     const [availability, setAvailability] = useState(true);
+    const [quantity, setQuantity] = useState(1);
+    const MAX_QUANTITY = 50;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (quantity > MAX_QUANTITY) {
+            alert(`Quantity should not exceed ${MAX_QUANTITY}`);
+            return;
+        }
 
         const ticketData = {
             name,
             price: parseFloat(price),
             category,
             availability,
+            quantity
         };
 
         try {
@@ -75,9 +83,20 @@ return (
                     onChange={(e) => setAvailability(e.target.checked)}
                 />
                 </Form.Group>
+                <Form.Group className='mb-3' controlId='ticketQuantity'>
+                    <Form.Label>Quantity</Form.Label>
+                    <Form.Control 
+                        type='number'
+                        min='1'
+                        max={MAX_QUANTITY}
+                        value={quantity}
+                        onChange={(e) => setQuantity(Number(e.target.value))}
+                        required
+                    />
+                </Form.Group>
 
                 <Button variant='primary' type='submit'>
-                    Create Ticket
+                    Create Tickets
                 </Button>
             </Form>
     </div>

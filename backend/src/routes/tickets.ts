@@ -29,7 +29,7 @@ router.get('/', authenticateToken, async (req, res) => {
 // POST /events/:eventId/tickets
 router.post('/', authenticateToken, async (req, res) => {
     const { eventId } = req.params;
-    const { name, price, category, availability } = req.body;
+    const { name, price, category, availability, quantity } = req.body;
 
     try {
         const event = await Event.findByPk(eventId);
@@ -37,17 +37,22 @@ router.post('/', authenticateToken, async (req, res) => {
             return res.status(404).json({ message: 'Event not found' });
         }
 
-        const ticket = await Ticket.create({
-            name,
-            price,
-            category,
-            availability,
-            eventId: Number(eventId),
-        });
+        const tickets = [];
+        for (let i = 0; i < quantity; i++) {
+            const ticket = await Ticket.create({
+                name,
+                price,
+                category,
+                availability,
+                eventId: Number(eventId),
+            });
+            tickets.push(ticket);            
+        }
 
-        res.status(201).json(ticket);
+
+        res.status(201).json({ message: `${quantity} tickets created successfully!`, tickets });
     } catch (error) {
-        console.error('Error creating ticket', error);
+        console.error('Error creating tickets', error);
         res.status(500).json({ message: 'Server error' });
     }
 });

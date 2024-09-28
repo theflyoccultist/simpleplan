@@ -38,23 +38,27 @@ router.get('/', authMiddleware_1.authenticateToken, (req, res) => __awaiter(void
 // POST /events/:eventId/tickets
 router.post('/', authMiddleware_1.authenticateToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { eventId } = req.params;
-    const { name, price, category, availability } = req.body;
+    const { name, price, category, availability, quantity } = req.body;
     try {
         const event = yield Event_1.Event.findByPk(eventId);
         if (!event) {
             return res.status(404).json({ message: 'Event not found' });
         }
-        const ticket = yield Ticket_1.Ticket.create({
-            name,
-            price,
-            category,
-            availability,
-            eventId: Number(eventId),
-        });
-        res.status(201).json(ticket);
+        const tickets = [];
+        for (let i = 0; i < quantity; i++) {
+            const ticket = yield Ticket_1.Ticket.create({
+                name,
+                price,
+                category,
+                availability,
+                eventId: Number(eventId),
+            });
+            tickets.push(ticket);
+        }
+        res.status(201).json({ message: `${quantity} tickets created successfully!`, tickets });
     }
     catch (error) {
-        console.error('Error creating ticket', error);
+        console.error('Error creating tickets', error);
         res.status(500).json({ message: 'Server error' });
     }
 }));

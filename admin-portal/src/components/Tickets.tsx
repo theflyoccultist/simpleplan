@@ -8,7 +8,8 @@ interface Ticket {
     price: number;
     category: string;
     availability: boolean;
-    eventId?: number;    
+    eventId?: number;  
+    quantity?: number;  
 }
 
 interface Event {
@@ -46,7 +47,7 @@ const TicketList: React.FC = () => {
                             'Authorization': `Bearer ${localStorage.getItem('token')}`,
                             }
                     });
-                    setTickets(response.data);
+                    setTickets(mergeTickets(response.data));
                 } catch (error) {
                     console.error('Error fetching tickets', error)   
                 }
@@ -54,6 +55,22 @@ const TicketList: React.FC = () => {
             fetchTickets();            
         }
     }, [selectedEvent]);
+
+    const mergeTickets = (tickets: Ticket[]): Ticket[] => {
+        const merged: { [key: string]: Ticket } = {};
+
+        tickets.forEach(ticket => {
+            const key = `${ticket.name}_${ticket.price}_${ticket.category}_${ticket.availability}`;
+        
+            if (merged[key]) {
+                merged[key].quantity = (merged[key].quantity || 1) +1;
+            } else {
+                merged[key] = { ...ticket, quantity: 1}
+            }
+        });
+
+        return Object.values(merged);
+    }
 
     // Function to handle event selection
     const handleSelectEvent = (event: Event) => {
@@ -93,6 +110,7 @@ return (
                             <p>Price: {ticket.price}</p>
                             <p>Category: {ticket.category}</p>
                             <p>Availability: {ticket.availability ? 'Available': 'Not Available'}</p>
+                            <p>Quantity: {ticket.quantity}</p>
                         </li>                
                      ))}
                 </ul>      

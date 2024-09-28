@@ -44,7 +44,7 @@ router.post('/register', [
                 password: hash,
             });
             const token = jsonwebtoken_1.default.sign({ id: newUser.id }, process.env.JWT_SECRET, {
-                expiresIn: '1h',
+                expiresIn: '1d',
             });
             return res.status(201).json({ token });
         }));
@@ -73,7 +73,7 @@ router.post('/login', [
             return res.status(400).json({ message: 'Invalid password' });
         }
         const token = jsonwebtoken_1.default.sign({ id: user.id }, process.env.JWT_SECRET, {
-            expiresIn: '1h',
+            expiresIn: '1d',
         });
         res.json({ token });
     }

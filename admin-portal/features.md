@@ -2,9 +2,9 @@ Key Features:
 
     Event management: Add, edit, delete events.
     Ticket management: Manage ticket prices, availability, and refunds.
-    Authentication: Ensure employees log in securely (JWT or OAuth).
+    Authentication: Ensure employees log in securely (JWT).
     Database Interaction: Use API requests to the backend to create and update event/ticket information in PostgreSQL.
-    Tools: Use Vite for fast bundling, React + TypeScript for strong typing, and libraries like Axios or Fetch for API calls.
+    Tools: Use Vite for fast bundling, React + TypeScript for strong typing. axios is used for API calls.
 
 1. Dashboard Route
 
@@ -194,3 +194,135 @@ Step 5: Ticket Management
     What to Do:
         Add the route for managing tickets (/events/:id/tickets).
         Implement functionality to create and manage ticket types, set prices, and check availability.
+
+Step 6: User Management
+
+    Goal: Implement user management functionality for admins and attendees.
+    What to Do:
+        Create User Management Page (/users):
+            Display a list of users with filtering options (e.g., attendees, admins).
+            Add functionality to search for users by name or email.
+            Implement buttons for adding new admins and editing user roles.
+
+        Add User Details Page (/users/:id):
+            Show detailed information about the selected user, such as:
+                Purchase history for attendees.
+                Admin roles and permissions for employees.
+            Add options to deactivate or reset user accounts.
+
+        Create User Invitation Form (/users/new):
+            Create a form for inviting or adding new employees/admins.
+            Collect details like name, email, and role.
+            Send invitation email or automatically add to the system.
+
+        Implement Role Management:
+            Allow admins to assign roles to users (e.g., Admin, Manager, Attendee).
+            Set permissions based on roles for accessing certain parts of the application.
+
+Step 7: Revenue and Sales Reports
+
+    Goal: Provide detailed sales and revenue reports.
+    What to Do:
+        Create Sales Overview Page (/sales):
+            Display a summary of total sales, revenue, and refunded sales.
+            Show breakdown of revenue per event.
+            Implement filters for specific time periods, events, or ticket types.
+
+        Add Detailed Revenue Reports:
+            Create detailed tables showing ticket sales and revenue for each event.
+            Include metrics like average ticket price, total tickets sold, and refund rates.
+            Allow exporting data to CSV or PDF for further analysis.
+
+        Create Graphs for Sales Trends:
+            Implement line or bar charts to visualize sales trends over time.
+            Show peaks in sales and identify trends related to events.
+            Display event-specific sales performance charts.
+
+        Create Export and Print Options:
+            Add buttons to export reports as CSV or PDF.
+            Implement print-friendly versions of sales reports.
+
+Step 8: Analytics and Reports
+
+    Goal: Provide in-depth performance analytics for events and user behavior.
+    What to Do:
+        Create Analytics Overview Page (/analytics):
+            Show a summary of key metrics such as event attendance, demographics, and engagement.
+            Include quick stats like total attendees, conversion rates, and refund rates.
+
+        Create Event Performance Reports:
+            Show detailed reports for each event, including:
+                Attendance numbers.
+                Demographics of attendees.
+                Revenue breakdown by ticket type.
+            Implement graphs to visualize data trends.
+
+        Implement User Behavior Analytics:
+            Track and display metrics like:
+                Conversion rates from ticket viewing to purchase.
+                Average time spent on event pages.
+                Demographic breakdown of users engaging with events.
+
+        Create Key Performance Indicators (KPIs):
+            Display KPIs for quick assessment of performance, such as:
+                Refund rates.
+                Average revenue per attendee.
+                User satisfaction metrics.
+
+        Enable Custom Reports:
+            Allow admins to generate custom reports based on selected criteria.
+            Provide options to filter by event, date range, user type, etc.
+
+Step 9: Notifications and Alerts
+
+    Goal: Implement a system to manage notifications and alerts for admins and employees.
+    What to Do:
+        Create Notifications Page (/notifications):
+            Display a list of all notifications, including:
+                Low ticket availability alerts.
+                Customer inquiries or issues.
+                System updates or maintenance alerts.
+            Implement filters and search functionality to find specific notifications.
+
+        Implement Alert System:
+            Set up automatic alerts for critical issues like:
+                Low ticket availability or sold-out events.
+                Payment or refund issues.
+            Notify admins and employees based on their roles and permissions.
+
+        Push Notifications:
+            Implement a push notification system for immediate alerts.
+            Allow users to customize their notification preferences (e.g., email, SMS).
+
+        Create Notification Settings:
+            Add a settings page where users can customize notification types and channels.
+            Allow admins to configure system-wide notification rules.
+
+Step 10: Settings and Configuration
+
+    Goal: Provide a settings page for administrators to configure app-wide settings and integrations.
+    What to Do:
+        Create Settings Page (/settings):
+            Add sections for different settings categories like Payment, Email, and System Configurations.
+            Implement forms for updating settings and saving changes.
+
+        Implement Payment Configuration:
+            Add options to configure payment gateways (e.g., Stripe, PayPal).
+            Allow admins to set default currency and tax rates.
+
+        Email Template Customization:
+            Create a section for customizing email templates used for:
+                Event reminders.
+                Purchase confirmations.
+                Account-related notifications.
+            Implement a preview feature for testing email templates.
+
+        API and External Integrations:
+            Add options to configure API keys and integration settings for external services (e.g., analytics tools, CRM).
+            Allow enabling/disabling certain integrations as needed.
+
+        General System Configurations:
+            Add options for setting app-wide configurations such as:
+                Default timezone.
+                Admin contact information.
+                Maintenance mode settings.
