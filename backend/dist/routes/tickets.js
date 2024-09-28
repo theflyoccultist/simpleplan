@@ -8,12 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
+const express_1 = __importDefault(require("express"));
 const Ticket_1 = require("../models/Ticket");
 const Event_1 = require("../models/Event");
 const authMiddleware_1 = require("../middlewares/authMiddleware");
-const router = (0, express_1.Router)();
+const router = express_1.default.Router({ mergeParams: true });
 // GET /events/:eventId/tickets
 router.get('/', authMiddleware_1.authenticateToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { eventId } = req.params;
@@ -56,7 +59,7 @@ router.post('/', authMiddleware_1.authenticateToken, (req, res) => __awaiter(voi
     }
 }));
 // PUT /events/:eventId/tickets/:ticketId
-router.put('/', authMiddleware_1.authenticateToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.put('/:ticketId', authMiddleware_1.authenticateToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { ticketId } = req.params;
     const { name, price, category, availability } = req.body;
     try {
@@ -77,7 +80,7 @@ router.put('/', authMiddleware_1.authenticateToken, (req, res) => __awaiter(void
     }
 }));
 // DELETE /events/:eventId/tickets/:ticketId
-router.delete('/', authMiddleware_1.authenticateToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.delete('/:ticketId', authMiddleware_1.authenticateToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { ticketId } = req.params;
     try {
         const ticket = yield Ticket_1.Ticket.findByPk(ticketId);

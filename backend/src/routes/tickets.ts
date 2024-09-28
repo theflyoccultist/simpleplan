@@ -1,9 +1,9 @@
-import { Router } from 'express';
+import express from 'express';
 import { Ticket } from '../models/Ticket';
 import { Event } from '../models/Event';
 import { authenticateToken } from '../middlewares/authMiddleware';
 
-const router = Router();
+const router = express.Router({ mergeParams: true })
 
 // GET /events/:eventId/tickets
 router.get('/', authenticateToken, async (req, res) => {
@@ -53,7 +53,7 @@ router.post('/', authenticateToken, async (req, res) => {
 });
 
 // PUT /events/:eventId/tickets/:ticketId
-router.put('/', authenticateToken, async (req, res) => {
+router.put('/:ticketId', authenticateToken, async (req, res) => {
     const { ticketId } = req.params;
     const { name, price, category, availability } = req.body;
 
@@ -77,7 +77,7 @@ router.put('/', authenticateToken, async (req, res) => {
 });
 
 // DELETE /events/:eventId/tickets/:ticketId
-router.delete('/', authenticateToken, async (req, res) => {
+router.delete('/:ticketId', authenticateToken, async (req, res) => {
     const { ticketId } = req.params;
 
     try {
