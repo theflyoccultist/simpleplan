@@ -5,8 +5,8 @@ import { authenticateToken } from '../middlewares/authMiddleware';
 
 const router = Router();
 
-// GET tickets/:eventId
-router.get('/:eventId', authenticateToken, async (req, res) => {
+// GET /events/:eventId/tickets
+router.get('/', authenticateToken, async (req, res) => {
     const { eventId } = req.params;
 
     try {
@@ -26,8 +26,8 @@ router.get('/:eventId', authenticateToken, async (req, res) => {
     }
 });
 
-// POST tickets/:eventId
-router.post('/:eventId', authenticateToken, async (req, res) => {
+// POST /events/:eventId/tickets
+router.post('/', authenticateToken, async (req, res) => {
     const { eventId } = req.params;
     const { name, price, category, availability } = req.body;
 
@@ -47,13 +47,13 @@ router.post('/:eventId', authenticateToken, async (req, res) => {
 
         res.status(201).json(ticket);
     } catch (error) {
-        console.error(error);
+        console.error('Error creating ticket', error);
         res.status(500).json({ message: 'Server error' });
     }
 });
 
-// PUT tickets/:ticketId
-router.put('/:ticketId', authenticateToken, async (req, res) => {
+// PUT /events/:eventId/tickets/:ticketId
+router.put('/', authenticateToken, async (req, res) => {
     const { ticketId } = req.params;
     const { name, price, category, availability } = req.body;
 
@@ -76,8 +76,8 @@ router.put('/:ticketId', authenticateToken, async (req, res) => {
     }
 });
 
-// DELETE tickets/:ticketId
-router.delete('/:ticketId', authenticateToken, async (req, res) => {
+// DELETE /events/:eventId/tickets/:ticketId
+router.delete('/', authenticateToken, async (req, res) => {
     const { ticketId } = req.params;
 
     try {

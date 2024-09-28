@@ -31,7 +31,7 @@ database_1.sequelize.authenticate()
     console.error('Unable to connect to the database:', err);
 });
 app.use('/auth', auth_1.default);
-app.use('/tickets', tickets_1.default);
+app.use('/events/:eventId/tickets', tickets_1.default);
 app.use('/events', events_1.default);
 app.get('/', (req, res) => {
     res.send('API Running');

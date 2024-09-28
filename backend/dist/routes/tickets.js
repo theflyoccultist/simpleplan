@@ -14,8 +14,8 @@ const Ticket_1 = require("../models/Ticket");
 const Event_1 = require("../models/Event");
 const authMiddleware_1 = require("../middlewares/authMiddleware");
 const router = (0, express_1.Router)();
-// GET tickets/:eventId
-router.get('/:eventId', authMiddleware_1.authenticateToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+// GET /events/:eventId/tickets
+router.get('/', authMiddleware_1.authenticateToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { eventId } = req.params;
     try {
         const tickets = yield Ticket_1.Ticket.findAll({
@@ -32,8 +32,8 @@ router.get('/:eventId', authMiddleware_1.authenticateToken, (req, res) => __awai
         res.status(500).json({ message: 'Server error' });
     }
 }));
-// POST tickets/:eventId
-router.post('/:eventId', authMiddleware_1.authenticateToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+// POST /events/:eventId/tickets
+router.post('/', authMiddleware_1.authenticateToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { eventId } = req.params;
     const { name, price, category, availability } = req.body;
     try {
@@ -51,12 +51,12 @@ router.post('/:eventId', authMiddleware_1.authenticateToken, (req, res) => __awa
         res.status(201).json(ticket);
     }
     catch (error) {
-        console.error(error);
+        console.error('Error creating ticket', error);
         res.status(500).json({ message: 'Server error' });
     }
 }));
-// PUT tickets/:ticketId
-router.put('/:ticketId', authMiddleware_1.authenticateToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+// PUT /events/:eventId/tickets/:ticketId
+router.put('/', authMiddleware_1.authenticateToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { ticketId } = req.params;
     const { name, price, category, availability } = req.body;
     try {
@@ -76,8 +76,8 @@ router.put('/:ticketId', authMiddleware_1.authenticateToken, (req, res) => __awa
         res.status(500).json({ message: 'Server error' });
     }
 }));
-// DELETE tickets/:ticketId
-router.delete('/:ticketId', authMiddleware_1.authenticateToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+// DELETE /events/:eventId/tickets/:ticketId
+router.delete('/', authMiddleware_1.authenticateToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { ticketId } = req.params;
     try {
         const ticket = yield Ticket_1.Ticket.findByPk(ticketId);

@@ -8,21 +8,23 @@ interface TicketCreate {
 
 const TicketCreateForm: React.FC<TicketCreate> = ({ eventId }) => {
     const [name, setName] = useState('');
-    const [ticketPrice, setTicketPrice] = useState('');
-    const [ticketCategory, setTicketCategory] = useState('');
-    const [ticketAvailability, setTicketAvailability] = useState(true);
+    const [price, setPrice] = useState('');
+    const [category, setCategory] = useState('');
+    const [availability, setAvailability] = useState(true);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        const ticketData = {
+            name,
+            price: parseFloat(price),
+            category,
+            availability,
+        };
+
         try {
-            await axios.post(`http://localhost:3000/tickets/${eventId}`, {
-                name,
-                ticketPrice,
-                ticketCategory,
-                ticketAvailability,
-            }, {
-                headers : {
+            await axios.post(`http://localhost:3000/events/${eventId}/tickets`, ticketData, {
+                    headers : {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             });
@@ -51,8 +53,8 @@ return (
                     <Form.Control 
                         type='number'
                         placeholder='Price'
-                        value={ticketPrice}
-                        onChange={(e) => setTicketPrice(e.target.value)}
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
                         required
                     />
                 </Form.Group>
@@ -60,8 +62,8 @@ return (
                     <Form.Label>Category</Form.Label>
                     <Form.Control 
                         type='text'
-                        value={ticketCategory}
-                        onChange={(e) => setTicketCategory(e.target.value)}
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
                         required
                     />
                 </Form.Group>
@@ -69,8 +71,8 @@ return (
                 <Form.Check
                     type="checkbox"
                     label="Available?"
-                    checked={ticketAvailability}
-                    onChange={(e) => setTicketAvailability(e.target.checked)}
+                    checked={availability}
+                    onChange={(e) => setAvailability(e.target.checked)}
                 />
                 </Form.Group>
 

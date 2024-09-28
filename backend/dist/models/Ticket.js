@@ -39,6 +39,7 @@ Ticket.init({
     },
 }, {
     sequelize: database_1.sequelize,
+    modelName: 'Ticket',
     tableName: 'tickets',
 });
 Event_1.Event.hasMany(Ticket, { foreignKey: 'eventId' });

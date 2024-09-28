@@ -54,6 +54,7 @@ Ticket.init(
     },
     {
         sequelize,
+        modelName: 'Ticket',
         tableName: 'tickets',
     }
 );

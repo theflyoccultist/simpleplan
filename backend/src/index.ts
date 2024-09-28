@@ -34,7 +34,7 @@ sequelize.authenticate()
 
 app.use('/auth', authRouter);
 
-app.use('/tickets', ticketRouter);
+app.use('/events/:eventId/tickets', ticketRouter);
 
 app.use('/events', eventRouter);
 
