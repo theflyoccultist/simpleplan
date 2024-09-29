@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Card } from 'react-bootstrap';
 import axios from "axios";
+import {QRCodeSVG} from 'qrcode.react';
 import TicketCreateForm from './TicketCreateForm';
+import './Tickets.css';
 
 interface Ticket {
     id?: number;
@@ -80,40 +83,47 @@ const TicketList: React.FC = () => {
 
 return (
     <div>
-        <div>
+        <div className='event-selection'>
             <h3>Select an event to create tickets for:</h3>
-            <ul>
+
                 {events.map(event => (
-                    <li key={event.id}>
+                    <div key={event.id}>
                         <button onClick={() => handleSelectEvent(event)}>{event.name}</button>
-                    </li>
+                    </div>
                 ))}
-            </ul>            
+        
         </div>
 
         {/* Display selected event name and ticket creation form */}
-        {selectedEvent && (
-            <>
-                <h2>Creating Tickets for: {selectedEvent.name}</h2>
-                <TicketCreateForm eventId={selectedEvent.id}/>
-            </>
-        )}
-
+        <div className='ticket-form'>
+            {selectedEvent && (
+                <>
+                    <h2>Creating Tickets for: {selectedEvent.name}</h2>
+                    <TicketCreateForm eventId={selectedEvent.id}/>
+                </>
+            )}
+        </div>
+        
         {/* Display tickets for a selected event */}
         {selectedEvent && tickets.length > 0 && (
             <>
                 <h2>Displaying Tickets for: {selectedEvent.name}</h2>
-                <ul>
+
                     {tickets.map(ticket => (
-                        <li key={ticket.id}>
-                            <p>Name: {ticket.name}</p>
-                            <p>Price: {ticket.price}</p>
-                            <p>Category: {ticket.category}</p>
-                            <p>Availability: {ticket.availability ? 'Available': 'Not Available'}</p>
-                            <p>Quantity: {ticket.quantity}</p>
-                        </li>                
+                        <Card key={ticket.id} className='ticket-card'>
+                            <Card.Body>
+                                <p>Name: {ticket.name}</p>
+                                <p>Price: {ticket.price}</p>
+                                <p>Category: {ticket.category}</p>
+                                <p>Availability: {ticket.availability ? 'Available': 'Not Available'}</p>
+                                <p>Quantity: {ticket.quantity}</p>
+
+                                {/* Generate and display a QR code for the ticket */}
+                                <QRCodeSVG value={`Ticket ID: ${ticket.id}, Name: ${ticket.name}, Event: ${selectedEvent.name}`} />                
+                            </Card.Body>
+                        </Card>
                      ))}
-                </ul>      
+   
             </>
         )}
 

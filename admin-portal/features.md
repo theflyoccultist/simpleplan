@@ -60,7 +60,7 @@ Key Features:
     Route: /events/:id/tickets
         Purpose: Manage tickets for a specific event.
         Features:
-            View ticket types (VIP, General Admission, etc.).
+            View ticket types (VIP, General Admission, Early Bird, Giveaways, Members-only).
             Set prices, number of tickets available.
             Manage refunds or issue tickets to customers manually.
 
@@ -194,6 +194,8 @@ Step 5: Ticket Management
     What to Do:
         Add the route for managing tickets (/events/:id/tickets).
         Implement functionality to create and manage ticket types, set prices, and check availability.
+
+________________________________________________________________________________________________________
 
 Step 6: User Management
 

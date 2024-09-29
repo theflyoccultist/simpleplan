@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Button, Form } from 'react-bootstrap';
+import Select from "react-select";
+import './TicketCreateForm.css';
 
 interface TicketCreate {
     eventId: number;    
@@ -9,7 +11,7 @@ interface TicketCreate {
 const TicketCreateForm: React.FC<TicketCreate> = ({ eventId }) => {
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
-    const [category, setCategory] = useState('');
+    const [category, setCategory] = useState<{ value: string; label: string } | null>(null);
     const [availability, setAvailability] = useState(true);
     const [quantity, setQuantity] = useState(1);
     const MAX_QUANTITY = 50;
@@ -25,28 +27,37 @@ const TicketCreateForm: React.FC<TicketCreate> = ({ eventId }) => {
         const ticketData = {
             name,
             price: parseFloat(price),
-            category,
+            category: category?.value,
             availability,
             quantity
         };
 
         try {
             await axios.post(`http://localhost:3000/events/${eventId}/tickets`, ticketData, {
-                    headers : {
+                headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             });
             alert('Ticket created successfully');
         } catch (error) {
-            console.error('error creating tickets', error);
+            console.error('Error creating tickets', error);
         }
-    }
+    };
 
-return (
-    <div>
-        <h2>Create new tickets</h2>
+    // Ticket category options
+    const ticketOptions = [
+        { value: "VIP", label: "VIP" },
+        { value: "General Admission", label: "General Admission" },
+        { value: "Early Bird", label: "Early Bird" },
+        { value: "Giveaways", label: "Giveaways" },
+        { value: "Members Only", label: "Members Only" },
+    ];
+
+    return (
+        <div>
+            <h2>Create new tickets</h2>
             <Form onSubmit={handleSubmit}>
-                <Form.Group className='mb-3' controlId='ticketName'>
+                <Form.Group className='mb-3 form-group' controlId='ticketName'>
                     <Form.Label>Name</Form.Label>
                     <Form.Control
                         type='text' 
@@ -56,7 +67,7 @@ return (
                         required
                     />
                 </Form.Group>
-                <Form.Group className='mb-3' controlId='ticketPrice'>
+                <Form.Group className='mb-3 form-group' controlId='ticketPrice'>
                     <Form.Label>Price</Form.Label>
                     <Form.Control 
                         type='number'
@@ -66,24 +77,24 @@ return (
                         required
                     />
                 </Form.Group>
-                <Form.Group className='mb-3' controlId='ticketCategory'>
+                <Form.Group className='mb-3 form-group' controlId='ticketCategory'>
                     <Form.Label>Category</Form.Label>
-                    <Form.Control 
-                        type='text'
+                    <Select
                         value={category}
-                        onChange={(e) => setCategory(e.target.value)}
+                        onChange={(option) => setCategory(option)}
+                        options={ticketOptions}
                         required
                     />
                 </Form.Group>
-                <Form.Group className='mb-3' controlId='ticketAvailability'>
-                <Form.Check
-                    type="checkbox"
-                    label="Available?"
-                    checked={availability}
-                    onChange={(e) => setAvailability(e.target.checked)}
-                />
+                <Form.Group className='mb-3 form-group' controlId='ticketAvailability'>
+                    <Form.Check
+                        type="checkbox"
+                        label="Available?"
+                        checked={availability}
+                        onChange={(e) => setAvailability(e.target.checked)}
+                    />
                 </Form.Group>
-                <Form.Group className='mb-3' controlId='ticketQuantity'>
+                <Form.Group className='mb-3 form-group' controlId='ticketQuantity'>
                     <Form.Label>Quantity</Form.Label>
                     <Form.Control 
                         type='number'
@@ -94,13 +105,12 @@ return (
                         required
                     />
                 </Form.Group>
-
                 <Button variant='primary' type='submit'>
                     Create Tickets
                 </Button>
             </Form>
-    </div>
-)
-}
+        </div>
+    );
+};
 
 export default TicketCreateForm;
