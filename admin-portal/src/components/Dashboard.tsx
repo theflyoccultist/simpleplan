@@ -46,6 +46,15 @@ export default function Dashboard () {
                         </Card.Text>
                         <Card.Link href="/tickets">Manage tickets</Card.Link>
                     </Card.Body>
+                </Card>
+                <Card className="dashboard-card">
+                    <Card.Body>
+                        <Card.Title>Users</Card.Title>
+                        <Card.Text>
+                            Hello
+                        </Card.Text>
+                        <Card.Link href="/users">Manage users</Card.Link>
+                    </Card.Body>
                 </Card>            
             </div>            
         </Container>

@@ -10,6 +10,7 @@ import Login from './components/Login.tsx'
 // import Register from './components/Register.tsx';
 import EventsList from './components/Events.tsx';
 import TicketList from './components/Tickets.tsx';
+import Users from './components/Users.tsx';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
@@ -22,6 +23,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         {/* <Route path='/register' element={<Register />} /> */}
         <Route path='/events' element={<EventsList />} />
         <Route path='/tickets' element={<TicketList />} />
+        <Route path='/users' element={<Users />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,
