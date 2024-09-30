@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, Container } from "react-bootstrap";
 import axios from "axios";
-import './Dashboard.css'
+import '../styles/Dashboard.css'
 
 export default function Dashboard () {
     const [events, setEvents] = useState<{ name: string}[]>([]);
@@ -32,11 +32,9 @@ export default function Dashboard () {
                     <Card.Body>
                         <Card.Title>Events</Card.Title>
                             Total Events: {events.length}<br/>
-                            <ul>
                                 {events.map((event, index) => (
-                                <li key={index}>{event.name}</li>
+                                <p key={index}>{event.name}</p>
                                 ))}
-                            </ul>
                         <Card.Link href="/events">Manage events</Card.Link>
                     </Card.Body>
                 </Card>

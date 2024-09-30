@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Button, Form } from 'react-bootstrap';
 import Select from "react-select";
-import './TicketCreateForm.css';
+import '../styles/TicketCreateForm.css';
 
 interface TicketCreate {
     eventId: number;    
@@ -80,6 +80,7 @@ const TicketCreateForm: React.FC<TicketCreate> = ({ eventId }) => {
                 <Form.Group className='mb-3 form-group' controlId='ticketCategory'>
                     <Form.Label>Category</Form.Label>
                     <Select
+                        placeholder="Select Category..."
                         value={category}
                         onChange={(option) => setCategory(option)}
                         options={ticketOptions}

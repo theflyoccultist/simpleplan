@@ -3,7 +3,7 @@ import { Card } from 'react-bootstrap';
 import axios from "axios";
 import {QRCodeSVG} from 'qrcode.react';
 import TicketCreateForm from './TicketCreateForm';
-import './Tickets.css';
+import '../styles/Tickets.css';
 
 interface Ticket {
     id?: number;
@@ -109,8 +109,8 @@ return (
             <>
                 <h2>Displaying Tickets for: {selectedEvent.name}</h2>
 
-                    {tickets.map(ticket => (
-                        <Card key={ticket.id} className='ticket-card'>
+                    {tickets.map((ticket, index) => (
+                        <Card key={index} className='ticket-card'>
                             <Card.Body>
                                 <p>Name: {ticket.name}</p>
                                 <p>Price: {ticket.price}</p>
@@ -118,7 +118,7 @@ return (
                                 <p>Availability: {ticket.availability ? 'Available': 'Not Available'}</p>
                                 <p>Quantity: {ticket.quantity}</p>
 
-                                {/* Generate and display a QR code for the ticket */}
+                                {/* Display QR code for the first ticket / for all tickets if expanded */}
                                 <QRCodeSVG value={`Ticket ID: ${ticket.id}, Name: ${ticket.name}, Event: ${selectedEvent.name}`} />                
                             </Card.Body>
                         </Card>
